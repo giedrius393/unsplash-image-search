@@ -1,9 +1,11 @@
+import Header from './Header';
 import logo from '../assets/logo.svg';
 import '../styles/App.css';
 
 function App(): JSX.Element {
   return (
     <div className="App">
+      <Header />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
