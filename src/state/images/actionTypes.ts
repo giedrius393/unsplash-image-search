@@ -1,0 +1,3 @@
+export const LOAD_START = 'IMAGES/LOAD_START';
+export const LOAD_SUCCESS = 'IMAGES/LOAD_SUCCESS';
+
