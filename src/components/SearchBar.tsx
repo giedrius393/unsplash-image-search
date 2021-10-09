@@ -6,11 +6,13 @@ const SUBMIT_REASONS = ['createOption', 'selectOption'];
 
 interface SearchBarProps {
   onSearchSubmit: (searchText: string) => void;
+  searchOptions: string[];
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearchSubmit }) => {
+const SearchBar: React.FC<SearchBarProps> = (props) => {
   const [searchInput, setSearchInput] = useState<string>('');
 
+  const { onSearchSubmit, searchOptions } = props;
 
   const onSubmit = (event: any) => {
     event.preventDefault();
@@ -44,7 +46,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchSubmit }) => {
           id='search-input-autocomplete'
           sx={{ ml: 1, flex: 1 }}
           freeSolo
-          options={['aaa', 'bbb', 'ccc']}
+          options={searchOptions}
           onChange={onChange}
           onInputChange={(_e, newValue) => setSearchInput(newValue)}
           blurOnSelect
