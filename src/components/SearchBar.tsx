@@ -1,19 +1,30 @@
-import { Paper, InputBase, IconButton } from '@mui/material';
+import { Paper, InputBase, IconButton, Autocomplete } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { useState } from 'react';
+
+const SUBMIT_REASONS = ['createOption', 'selectOption'];
 
 interface SearchBarProps {
   onSearchSubmit: (searchText: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearchSubmit }) => {
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState<string>('');
 
-  const onSubmit = (e: any) => {
-    e.preventDefault();
-    e.currentTarget.focus();
-    e.currentTarget.blur();
-    onSearchSubmit(searchInput);
+
+  const onSubmit = (event: any) => {
+    event.preventDefault();
+    event.currentTarget.focus();
+    event.currentTarget.blur();
+    if (searchInput.length) {
+      onSearchSubmit(searchInput);
+    }
+  };
+
+  const onChange = (_e: any, value: string | null, reason: string) => {
+    if (SUBMIT_REASONS.includes(reason) && value?.length) {
+      onSearchSubmit(value);
+    }
   };
 
   return (
@@ -28,13 +39,26 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchSubmit }) => {
           m: 2,
         }}
       >
-        <InputBase
+        <Autocomplete
+          inputValue={searchInput}
+          id='search-input-autocomplete'
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Images"
-          value={searchInput}
-          inputProps={{ 'aria-label': 'search images' }}
-          onChange={(e) => setSearchInput(e.target.value)}
-          onSubmit={onSubmit}
+          freeSolo
+          options={['aaa', 'bbb', 'ccc']}
+          onChange={onChange}
+          onInputChange={(_e, newValue) => setSearchInput(newValue)}
+          blurOnSelect
+          renderInput={(params) => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { InputLabelProps, InputProps, ...rest } = params;
+            return (
+              <InputBase
+                {...InputProps}
+                {...rest}
+                placeholder="Search Images"
+              />
+            );
+          }}
         />
         <IconButton
           sx={{ p: '10px' }}
