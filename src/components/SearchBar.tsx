@@ -38,7 +38,10 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
           p: '2px 4px',
           display: 'flex',
           alignItems: 'center',
+          flexGrow: 1,
+          maxWidth: 800,
           m: 2,
+          ml: 0,
         }}
       >
         <Autocomplete
