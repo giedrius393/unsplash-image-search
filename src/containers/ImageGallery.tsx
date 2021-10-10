@@ -21,27 +21,32 @@ function ImageGallery(): JSX.Element {
   const setImageListCols = () => setListCols(getColsByWidth());
 
   const dispatch = useDispatch();
+  const { imagesList, isLoading, searchInput } = useAppSelector((state) => state.images);
+
   const [imageListCols, setListCols] = useState(3);
-  const { imagesList, isLoading } = useAppSelector((state) => state.images);
-
-  useEffect(() => {
-    dispatch(loadImages);
-    setImageListCols();
-    window.addEventListener('resize', setImageListCols);
-
-    return () => window.removeEventListener('resize', setImageListCols);
-  }, []);
-
   const [itemRef] = useInfiniteScroll({
     loading: isLoading,
     hasNextPage: true,
     onLoadMore: () => dispatch(loadImages),
   });
 
+  useEffect(() => {
+    setImageListCols();
+    window.addEventListener('resize', setImageListCols);
+
+    return () => window.removeEventListener('resize', setImageListCols);
+  }, []);
+
+  useEffect(() => {
+    console.log('should restart');
+    dispatch(loadImages);
+  }, [searchInput]);
+
   if (isLoading && !imagesList.length) return <Loader fullscreen />;
 
   return (
     <>
+      {searchInput && <h2>Search results of {searchInput}:</h2>}
       <ImageList cols={imageListCols} >
         {imagesList.map((image) => (
           <ImageElement image={image} itemRef={itemRef}/>

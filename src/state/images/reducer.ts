@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { LOAD_START, LOAD_SUCCESS } from './actionTypes';
+import { LOAD_START, LOAD_SUCCESS, SEARCH } from './actionTypes';
 
 export interface Image {
   id: string;
@@ -14,12 +14,14 @@ interface ImagesState {
   imagesList: Image[],
   isLoading: boolean,
   searchInput: string | null,
+  searchOptions: string[],
 }
 
 const initialState: ImagesState = {
   imagesList: [],
   isLoading: false,
   searchInput: null,
+  searchOptions: [],
 };
 
 const imagesReducer = (
@@ -38,6 +40,19 @@ const imagesReducer = (
         ...state,
         isLoading: false,
         imagesList: [...state.imagesList, ...action.payload],
+      };
+    }
+    case SEARCH: {
+      return {
+        ...state,
+        imagesList: [],
+        searchInput: action.payload,
+        searchOptions: [
+          action.payload,
+          ...state.searchOptions.filter(
+            (option) => option !== action.payload,
+          ),
+        ],
       };
     }
     default: {
