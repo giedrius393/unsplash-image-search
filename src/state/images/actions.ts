@@ -8,7 +8,7 @@ export const loadImages = (dispatch: Dispatch): void => {
   setTimeout(() => {
     const imagesList = imageData.map((image) => ({
       id: image.id,
-      url: image.urls.small,
+      url: image.urls.regular,
       description: image.description || image.alt_description,
       likedByUser: image.liked_by_user,
       likes: image.likes,

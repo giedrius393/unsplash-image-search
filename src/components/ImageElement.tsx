@@ -12,14 +12,15 @@ const styles: Record<string, SxProps> = {
 };
 
 interface ImageProps {
-  image: Image
+  image: Image,
+  itemRef: any,
 }
 
-function ImageElement({ image }: ImageProps): JSX.Element {
+function ImageElement({ image, itemRef }: ImageProps): JSX.Element {
   const [liked, setLiked] = useState(false);
 
   return (
-    <ImageListItem key={image.id}>
+    <ImageListItem key={image.id} ref={itemRef}>
       <img
         src={image.url}
         alt={image.description}

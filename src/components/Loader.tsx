@@ -10,7 +10,7 @@ function Loader({ fullscreen }: LoaderProps): JSX.Element {
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        height: fullscreen ? '90vh' : 'auto',
+        height: fullscreen ? '90vh' : '8vh',
         alignItems: 'center',
       }}
     >

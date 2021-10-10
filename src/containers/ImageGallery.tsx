@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ImageList } from '@mui/material';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 
 import { ImageElement, Loader } from '../components';
 import { loadImages } from '../state/images/actions';
@@ -17,11 +18,11 @@ const getColsByWidth = (): number => {
 };
 
 function ImageGallery(): JSX.Element {
+  const setImageListCols = () => setListCols(getColsByWidth());
+
   const dispatch = useDispatch();
   const [imageListCols, setListCols] = useState(3);
   const { imagesList, isLoading } = useAppSelector((state) => state.images);
-
-  const setImageListCols = () => setListCols(getColsByWidth());
 
   useEffect(() => {
     dispatch(loadImages);
@@ -31,13 +32,19 @@ function ImageGallery(): JSX.Element {
     return () => window.removeEventListener('resize', setImageListCols);
   }, []);
 
+  const [itemRef] = useInfiniteScroll({
+    loading: isLoading,
+    hasNextPage: true,
+    onLoadMore: () => dispatch(loadImages),
+  });
+
   if (isLoading && !imagesList.length) return <Loader fullscreen />;
 
   return (
     <>
-      <ImageList cols={imageListCols} variant='masonry'>
+      <ImageList cols={imageListCols} >
         {imagesList.map((image) => (
-          <ImageElement image={image} />
+          <ImageElement image={image} itemRef={itemRef}/>
         ))}
       </ImageList>
       {isLoading && <Loader />}
