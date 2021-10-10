@@ -9,7 +9,7 @@ interface SearchBarProps {
   searchOptions: string[];
 }
 
-const SearchBar: React.FC<SearchBarProps> = (props) => {
+function SearchBar(props: SearchBarProps): JSX.Element {
   const [searchInput, setSearchInput] = useState<string>('');
 
   const { onSearchSubmit, searchOptions } = props;
@@ -76,6 +76,6 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       </Paper>
     </>
   );
-};
+}
 
 export default SearchBar;

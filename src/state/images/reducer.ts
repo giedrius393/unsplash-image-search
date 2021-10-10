@@ -1,12 +1,13 @@
 import { AnyAction } from 'redux';
 import { LOAD_START, LOAD_SUCCESS } from './actionTypes';
 
-interface Image {
+export interface Image {
   id: string;
   url: string;
   description: string;
   likedByUser: string;
   likes: number;
+  username: string;
 }
 
 interface ImagesState {

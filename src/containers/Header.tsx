@@ -1,4 +1,4 @@
-import { Button, Toolbar } from '@mui/material';
+import { Button, Toolbar, AppBar } from '@mui/material';
 
 import SearchBar from '../components/SearchBar';
 
@@ -14,18 +14,23 @@ function Header(): JSX.Element {
   };
 
   return (
-    <Toolbar sx={{ justifyContent: 'space-between' }}>
-      <SearchBar
-        onSearchSubmit={onSearchSubmit}
-        searchOptions={searchOptions}
-      />
-      <Button
-        onClick={onLogin}
-        variant='outlined'
-      >
-        Log In
-      </Button>
-    </Toolbar>
+    <AppBar
+      position='fixed'
+      sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+    >
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <SearchBar
+          onSearchSubmit={onSearchSubmit}
+          searchOptions={searchOptions}
+        />
+        <Button
+          onClick={onLogin}
+          variant='contained'
+        >
+          Log In
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 }
 

@@ -9,9 +9,10 @@ export const loadImages = (dispatch: Dispatch): void => {
     const imagesList = imageData.map((image) => ({
       id: image.id,
       url: image.urls.small,
-      description: image.alt_description,
+      description: image.description || image.alt_description,
       likedByUser: image.liked_by_user,
       likes: image.likes,
+      username: image.user.username,
     }));
     dispatch({ type: LOAD_SUCCESS, payload: imagesList });
   }, 3000);
