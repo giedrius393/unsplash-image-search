@@ -12,12 +12,14 @@ export interface Image {
 
 interface ImagesState {
   imagesList: Image[] | null,
-  isLoading: boolean
+  isLoading: boolean,
+  searchInput: string | null,
 }
 
 const initialState: ImagesState = {
   imagesList: null,
   isLoading: false,
+  searchInput: null,
 };
 
 const imagesReducer = (

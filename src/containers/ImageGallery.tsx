@@ -49,6 +49,7 @@ function ImageGallery(): JSX.Element {
           </ImageListItem>
         ))}
       </ImageList>
+      {isLoading && <p>Loading</p>}
     </>
   );
 }

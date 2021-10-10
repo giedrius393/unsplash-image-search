@@ -1,6 +1,16 @@
 import { Button, Toolbar, AppBar } from '@mui/material';
+import { SxProps } from '@mui/system';
 
 import SearchBar from '../components/SearchBar';
+
+const styles: Record<string, SxProps> = {
+  appBar: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  },
+  toolbar: {
+    justifyContent: 'space-between',
+  },
+};
 
 function Header(): JSX.Element {
   const searchOptions: string[] = [];
@@ -16,9 +26,9 @@ function Header(): JSX.Element {
   return (
     <AppBar
       position='fixed'
-      sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+      sx={styles.appBar}
     >
-      <Toolbar sx={{ justifyContent: 'space-between' }}>
+      <Toolbar sx={styles.toolbar}>
         <SearchBar
           onSearchSubmit={onSearchSubmit}
           searchOptions={searchOptions}
