@@ -11,13 +11,13 @@ export interface Image {
 }
 
 interface ImagesState {
-  imagesList: Image[] | null,
+  imagesList: Image[],
   isLoading: boolean,
   searchInput: string | null,
 }
 
 const initialState: ImagesState = {
-  imagesList: null,
+  imagesList: [],
   isLoading: false,
   searchInput: null,
 };
@@ -30,7 +30,6 @@ const imagesReducer = (
     case LOAD_START: {
       return {
         ...state,
-        imagesList: null,
         isLoading: true,
       };
     }
@@ -38,7 +37,7 @@ const imagesReducer = (
       return {
         ...state,
         isLoading: false,
-        imagesList: action.payload,
+        imagesList: [...state.imagesList, ...action.payload],
       };
     }
     default: {
