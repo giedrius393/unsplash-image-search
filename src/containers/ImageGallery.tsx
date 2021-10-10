@@ -4,7 +4,6 @@ import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 
 import { loadImages } from '../state/images/actions';
 import { useAppSelector } from '../state/hooks';
-import { Box } from '@mui/system';
 
 function ImageGallery(): JSX.Element {
   const dispatch = useDispatch();
@@ -12,7 +11,9 @@ function ImageGallery(): JSX.Element {
   const [listCols, setListCols] = useState(3);
 
   const setListColsByWidth = (width: number) => {
-    if (width < 600) {
+    if (width < 400) {
+      setListCols(1);
+    } else if (width < 600) {
       setListCols(2);
     } else if (width < 1100) {
       setListCols(3);
@@ -20,7 +21,6 @@ function ImageGallery(): JSX.Element {
       setListCols(5);
     }
   };
-
   const handleResize = () => setListColsByWidth(window.innerWidth);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function ImageGallery(): JSX.Element {
   if (isLoading || !imagesList) return <p>Loading</p>;
 
   return (
-    <Box sx={{ pt: 8 }}>
+    <>
       <ImageList cols={listCols} variant='masonry'>
         {imagesList.map((image) => (
           <ImageListItem key={image.id}>
@@ -49,7 +49,7 @@ function ImageGallery(): JSX.Element {
           </ImageListItem>
         ))}
       </ImageList>
-    </Box>
+    </>
   );
 }
 
