@@ -3,7 +3,13 @@ import { LOAD_START, LOAD_SUCCESS, SEARCH } from './actionTypes';
 
 export interface Image {
   id: string;
-  url: string;
+  urls: {
+    raw: string;
+    full: string;
+    regular: string;
+    small: string;
+    thumb: string;
+  };
   description: string;
   likedByUser: string;
   likes: number;

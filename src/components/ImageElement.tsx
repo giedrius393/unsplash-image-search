@@ -22,7 +22,13 @@ function ImageElement({ image, itemRef }: ImageProps): JSX.Element {
   return (
     <ImageListItem key={image.id} ref={itemRef}>
       <img
-        src={image.url}
+        style={{ minHeight: '300px', backgroundColor: 'gray' }}
+        src={image.urls.regular}
+        srcSet={
+          `${image.urls.thumb} 200w, ` +
+          `${image.urls.small} 400w, ` +
+          `${image.urls.regular}`
+        }
         alt={image.description}
         loading='lazy'
       />
