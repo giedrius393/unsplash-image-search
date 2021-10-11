@@ -38,7 +38,6 @@ function ImageGallery(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    console.log('should restart');
     dispatch(loadImages);
   }, [searchInput]);
 
@@ -47,7 +46,7 @@ function ImageGallery(): JSX.Element {
   return (
     <>
       {searchInput && <h2>Search results of {searchInput}:</h2>}
-      <ImageList cols={imageListCols} >
+      <ImageList cols={imageListCols} gap={7} >
         {imagesList.map((image) => (
           <ImageElement image={image} itemRef={itemRef}/>
         ))}
