@@ -31,15 +31,12 @@ function ImageGallery(): JSX.Element {
   });
 
   useEffect(() => {
+    dispatch(loadImages);
     setImageListCols();
     window.addEventListener('resize', setImageListCols);
 
     return () => window.removeEventListener('resize', setImageListCols);
   }, []);
-
-  useEffect(() => {
-    dispatch(loadImages);
-  }, [searchInput]);
 
   if (isLoading && !imagesList.length) return <Loader fullscreen />;
 

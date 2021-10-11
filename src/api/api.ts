@@ -12,6 +12,15 @@ const getAxiosOptions = () => ({
   },
 });
 
+const getImagesUrl = (page: number, searchInput: string | null) => {
+  let url = UNSPLASH_API;
+  if (searchInput?.length) url += '/search';
+  url += `/photos?page=${page}&per_page=${imagesPerPage}`;
+  if (searchInput?.length) url += `&query=${searchInput}`;
+
+  return url;
+};
+
 
 export const getImages = (page: number, searchInput: string | null): Promise<any> => {
   if (!clientId) {
@@ -19,7 +28,18 @@ export const getImages = (page: number, searchInput: string | null): Promise<any
   }
 
   return axios.get(
-    `${UNSPLASH_API}/photos?page=${page}&per_page=${imagesPerPage}`,
+    getImagesUrl(page, searchInput),
     getAxiosOptions(),
   );
+};
+
+export const login = (): Promise<any> => {
+  return axios.get('https://unsplash.com/oauth/authorize', {
+    data: {
+      client_id: clientId,
+      redirect_uri: 'http://localhost:3000',
+      response_type: 'code',
+      scope: 'public+read_user+write_likes',
+    },
+  });
 };

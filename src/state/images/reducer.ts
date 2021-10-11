@@ -57,6 +57,7 @@ const imagesReducer = (
         imagesList: [],
         page: 0,
         searchInput: action.payload,
+        isLoading: true,
         searchOptions: [
           action.payload,
           ...state.searchOptions.filter(

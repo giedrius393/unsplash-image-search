@@ -9,7 +9,8 @@ export const loadImages = (dispatch: Dispatch, getState: () => RootState): void 
 
   getImages(page, searchInput)
     .then(({ data }) => {
-      const imagesList = data.map((image: any) => ({
+      const imageData = data instanceof Array ? data : data.results;
+      const imagesList = imageData.map((image: any) => ({
         id: image.id,
         urls: image.urls,
         description: image.description || image.alt_description,
@@ -22,6 +23,7 @@ export const loadImages = (dispatch: Dispatch, getState: () => RootState): void 
     .catch((error) => console.log(error));
 };
 
-export const searchImages = (searchInput: string) => (dispatch: Dispatch): void => {
+export const searchImages = (searchInput: string) => (dispatch: Dispatch<any>): void => {
   dispatch({ type: SEARCH, payload: searchInput });
+  dispatch(loadImages);
 };
