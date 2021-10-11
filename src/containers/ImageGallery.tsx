@@ -48,7 +48,7 @@ function ImageGallery(): JSX.Element {
       {searchInput && <h2>Search results of {searchInput}:</h2>}
       <ImageList cols={imageListCols} gap={7} >
         {imagesList.map((image) => (
-          <ImageElement image={image} itemRef={itemRef}/>
+          <ImageElement key={`${image.id}-element`} image={image} itemRef={itemRef}/>
         ))}
       </ImageList>
       {isLoading && <Loader />}
