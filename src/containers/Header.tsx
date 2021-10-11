@@ -1,6 +1,7 @@
 import { Button, Toolbar, AppBar } from '@mui/material';
 import { SxProps } from '@mui/system';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import SearchBar from '../components/SearchBar';
 import { searchImages } from '../state/images/actions';
@@ -18,9 +19,6 @@ const styles: Record<string, SxProps> = {
 function Header(): JSX.Element {
   const dispatch = useDispatch();
   const searchOptions = useAppSelector((state) => state.images.searchOptions);
-  const onLogin = () => {
-    console.log('log in');
-  };
 
   return (
     <AppBar
@@ -32,12 +30,11 @@ function Header(): JSX.Element {
           onSearchSubmit={(input) => dispatch(searchImages(input))}
           searchOptions={searchOptions}
         />
-        <Button
-          onClick={onLogin}
-          variant='contained'
-        >
-          Log In
-        </Button>
+        <Link to='/login' style={{ textDecoration: 'none' }}>
+          <Button variant='contained'>
+            Log In
+          </Button>
+        </Link>
       </Toolbar>
     </AppBar>
   );
