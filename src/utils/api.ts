@@ -9,9 +9,9 @@ import {
   CLIENT_SECRET,
 } from './constants';
 
-const getAxiosOptions = () => ({
+const getAxiosOptions = (token?: string | null) => ({
   headers: {
-    Authorization: `Client-ID ${CLIENT_ID}`,
+    Authorization: token?.length ? `Bearer ${token}` : `Client-ID ${CLIENT_ID}`,
   },
 });
 
@@ -24,14 +24,18 @@ const getImagesUrl = (page: number, searchInput: string | null) => {
 };
 
 
-export const getImages = (page: number, searchInput: string | null): Promise<any> => {
+export const getImages = (
+  page: number,
+  searchInput: string | null,
+  token: string | null,
+): Promise<any> => {
   if (!CLIENT_ID) {
     return Promise.reject(new Error('fail'));
   }
 
   return axios.get(
     getImagesUrl(page, searchInput),
-    getAxiosOptions(),
+    getAxiosOptions(token),
   );
 };
 
