@@ -1,9 +1,8 @@
 import { Button, Toolbar, AppBar } from '@mui/material';
 import { SxProps } from '@mui/system';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 
-import SearchBar from '../components/SearchBar';
+import { SearchBar } from '../components';
 import { searchImages } from '../state/images/actions';
 import { useAppSelector } from '../state/hooks';
 
@@ -30,11 +29,9 @@ function Header(): JSX.Element {
           onSearchSubmit={(input) => dispatch(searchImages(input))}
           searchOptions={searchOptions}
         />
-        <Link to='/login' style={{ textDecoration: 'none' }}>
-          <Button variant='contained'>
-            Log In
-          </Button>
-        </Link>
+        <Button variant='contained'>
+          Log In
+        </Button>
       </Toolbar>
     </AppBar>
   );

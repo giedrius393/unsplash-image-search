@@ -11,6 +11,8 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "no-console": "warn",
     "require-jsdoc": "off",
     "indent": ["error", 2, { "SwitchCase": 1 }],
@@ -18,7 +20,6 @@
       "error",
       "always"
     ],
-    "@typescript-eslint/no-explicit-any": "off",
     "max-len": ["error", { "code": 90 }]
   }
 }

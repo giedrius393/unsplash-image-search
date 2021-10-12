@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { RootState } from '../store';
 import { LOAD_START, LOAD_SUCCESS, SEARCH } from './actionTypes';
-import { getImages } from '../../api/api';
+import { getImages } from '../../utils/api';
 
 export const loadImages = (dispatch: Dispatch, getState: () => RootState): void => {
   dispatch({ type: LOAD_START });

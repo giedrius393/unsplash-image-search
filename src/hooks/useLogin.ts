@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
-function Login(): null {
+function useLogin() {
   const history = useHistory();
   const location = useLocation();
 
@@ -11,8 +11,6 @@ function Login(): null {
       history.push('/');
     }
   }, [location]);
-
-  return null;
 }
 
-export default Login;
+export default useLogin;
