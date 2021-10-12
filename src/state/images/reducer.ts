@@ -1,5 +1,11 @@
 import { AnyAction } from 'redux';
-import { LOAD_START, LOAD_SUCCESS, SEARCH } from './actionTypes';
+import {
+  LOAD_START,
+  LOAD_SUCCESS,
+  SEARCH,
+  TOGGLE_PHOTO_LIKE,
+  TOGGLE_PHOTO_UNLIKE,
+} from './actionTypes';
 
 export interface Image {
   id: string;
@@ -11,7 +17,7 @@ export interface Image {
     thumb: string;
   };
   description: string;
-  likedByUser: string;
+  likedByUser: boolean;
   likes: number;
   username: string;
 }
@@ -64,6 +70,24 @@ const imagesReducer = (
             (option) => option !== action.payload,
           ),
         ],
+      };
+    }
+    case TOGGLE_PHOTO_LIKE: {
+      return {
+        ...state,
+        imagesList: state.imagesList.map((image) => ({
+          ...image,
+          likedByUser: image.id === action.payload ? true : image.likedByUser,
+        })),
+      };
+    }
+    case TOGGLE_PHOTO_UNLIKE: {
+      return {
+        ...state,
+        imagesList: state.imagesList.map((image) => ({
+          ...image,
+          likedByUser: image.id === action.payload ? false : image.likedByUser,
+        })),
       };
     }
     default: {

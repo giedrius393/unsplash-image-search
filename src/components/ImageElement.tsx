@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { IconButton, ImageListItem, ImageListItemBar } from '@mui/material';
 import { Image } from '../state/images/reducer';
@@ -15,10 +14,25 @@ interface ImageProps {
   image: Image,
   itemRef: any,
   isLoggedIn: boolean,
+  onImageLikeClick: (id: string) => void
+  onImageUnlikeClick: (id: string) => void
 }
 
-function ImageElement({ image, itemRef, isLoggedIn }: ImageProps): JSX.Element {
-  const [liked, setLiked] = useState(false);
+function ImageElement(props: ImageProps): JSX.Element {
+  const {
+    image,
+    itemRef,
+    isLoggedIn,
+    onImageLikeClick,
+    onImageUnlikeClick,
+  } = props;
+
+  const onLikeClick = () => {
+    if (!image.likedByUser) {
+      return onImageLikeClick(image.id);
+    }
+    onImageUnlikeClick(image.id);
+  };
 
   return (
     <ImageListItem key={image.id} ref={itemRef}>
@@ -40,7 +54,7 @@ function ImageElement({ image, itemRef, isLoggedIn }: ImageProps): JSX.Element {
           isLoggedIn && (
             <IconButton
               sx={styles.iconButton}
-              onClick={() => setLiked(!liked)}
+              onClick={onLikeClick}
             >
               {image.likedByUser ? <Favorite/> : <FavoriteBorder/> }
             </IconButton>

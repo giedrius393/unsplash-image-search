@@ -4,7 +4,11 @@ import { ImageList } from '@mui/material';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 
 import { ImageElement, Loader } from '../components';
-import { loadImages } from '../state/images/actions';
+import {
+  likeImageAction,
+  unlikeImageAction,
+  loadImages,
+} from '../state/images/actions';
 import { useAppSelector } from '../state/hooks';
 
 const getColsByWidth = (): number => {
@@ -51,6 +55,8 @@ function ImageGallery(): JSX.Element {
             image={image}
             itemRef={itemRef}
             isLoggedIn={isLoggedIn}
+            onImageLikeClick={(id) => dispatch(likeImageAction(id))}
+            onImageUnlikeClick={(id) => dispatch(unlikeImageAction(id))}
           />
         ))}
       </ImageList>

@@ -51,3 +51,11 @@ export const getLogInToken = (code: string): Promise<any> => {
   }, getAxiosOptions());
 };
 
+export const likeImage = (imageId: string) : Promise<any> => {
+  return axios.post(`${UNSPLASH_API}/photos/${imageId}/like`, null, getAxiosOptions());
+};
+
+export const unlikeImage = (imageId: string) : Promise<any> => {
+  return axios.delete(`${UNSPLASH_API}/photos/${imageId}/like`, getAxiosOptions());
+};
+
