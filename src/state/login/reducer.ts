@@ -2,15 +2,9 @@ import { AnyAction } from 'redux';
 import { LOGIN, LOGOUT } from './actionTypes';
 
 
-interface Login {
-  isLoggedIn: boolean,
-  token: string | null,
-}
+interface Login { isLoggedIn: boolean }
 
-const initialState: Login = {
-  isLoggedIn: false,
-  token: null,
-};
+const initialState: Login = { isLoggedIn: false };
 
 const loginReducer = (
   state = initialState,
@@ -18,10 +12,7 @@ const loginReducer = (
 ): Login => {
   switch (action.type) {
     case LOGIN: {
-      return {
-        isLoggedIn: true,
-        token: action.payload,
-      };
+      return { isLoggedIn: true };
     }
     case LOGOUT: {
       return initialState;

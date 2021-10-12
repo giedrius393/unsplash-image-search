@@ -6,10 +6,13 @@ import { LOGIN, LOGOUT } from './actionTypes';
 export const logIn = (code: string) => async (dispatch: Dispatch) => {
   const { data } = await getLogInToken(code);
   window.localStorage.setItem('token', data.access_token);
-  dispatch(setToken(data.access_token));
+  dispatch({ type: LOGIN });
 };
 
-export const setToken = (token: string) => ({ type: LOGIN, payload: token });
+export const checkLogInStatus = (dispatch: Dispatch) => {
+  const token = window.localStorage.getItem('token');
+  if (token?.length) dispatch(({ type: LOGIN }));
+};
 
 export const logOut = (dispatch: Dispatch) => {
   dispatch({ type: LOGOUT });

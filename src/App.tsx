@@ -1,19 +1,31 @@
 import { Box } from '@mui/material';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { Header, ImageGallery } from './modules';
-import useLogin from './hooks/useLogin';
+import { Header, ImageGallery, Login } from './modules';
+import { checkLogInStatus } from './state/login/actions';
 
 
 function App(): JSX.Element {
-  useLogin();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+    token?.length && dispatch(checkLogInStatus);
+  }, []);
 
   return (
-    <>
-      <Header />
-      <Box sx={{ pt: 8 }}>
-        <ImageGallery />
-      </Box>
-    </>
+    <Router>
+      <Route exact path='/login'>
+        <Login />
+      </Route>
+      <Route exact path='/'>
+        <Header />
+        <Box sx={{ pt: 8 }}>
+          <ImageGallery />
+        </Box>
+      </Route>
+    </Router>
   );
 }
 

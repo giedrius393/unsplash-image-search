@@ -2,7 +2,7 @@ import { Toolbar, AppBar } from '@mui/material';
 import { SxProps } from '@mui/system';
 import { useDispatch } from 'react-redux';
 
-import { SearchBar, Login } from '../components';
+import { SearchBar, LoginButton } from '../components';
 import { searchImages } from '../state/images/actions';
 import { useAppSelector } from '../state/hooks';
 import { logOut } from '../state/login/actions';
@@ -31,7 +31,7 @@ function Header(): JSX.Element {
           onSearchSubmit={(input) => dispatch(searchImages(input))}
           searchOptions={searchOptions}
         />
-        <Login
+        <LoginButton
           isLoggedIn={isLoggedIn}
           onLogOut={() => dispatch(logOut)}
         />

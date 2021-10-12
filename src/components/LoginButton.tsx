@@ -6,7 +6,7 @@ interface LoginProps {
   onLogOut: () => void,
 }
 
-function Login(props: LoginProps) {
+function LoginButton(props: LoginProps) {
   const redirectToLoginPage = () => {
     window.location.href = LOGIN_URL;
   };
@@ -27,4 +27,4 @@ function Login(props: LoginProps) {
   );
 }
 
-export default Login;
+export default LoginButton;

@@ -6,9 +6,8 @@ import { getImages } from '../../utils/api';
 export const loadImages = (dispatch: Dispatch, getState: () => RootState): void => {
   dispatch({ type: LOAD_START });
   const { page, searchInput } = getState().images;
-  const { token } = getState().login;
 
-  getImages(page, searchInput, token)
+  getImages(page, searchInput)
     .then(({ data }) => {
       const imageData = data instanceof Array ? data : data.results;
       const imagesList = imageData.map((image: any) => ({
@@ -28,3 +27,8 @@ export const searchImages = (searchInput: string) => (dispatch: Dispatch<any>): 
   dispatch({ type: SEARCH, payload: searchInput });
   dispatch(loadImages);
 };
+
+// export const likeImage = (imageId: string) =>
+//   (dispatch: Dispatch, getState: () => RootState) => {
+
+// }
