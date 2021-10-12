@@ -23,7 +23,9 @@ const loginReducer = (
         token: action.payload,
       };
     }
-    case LOGOUT:
+    case LOGOUT: {
+      return initialState;
+    }
     default: {
       return state;
     }

@@ -22,6 +22,7 @@ function ImageGallery(): JSX.Element {
 
   const dispatch = useDispatch();
   const { imagesList, isLoading, searchInput } = useAppSelector((state) => state.images);
+  const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
 
   const [imageListCols, setListCols] = useState(3);
   const [itemRef] = useInfiniteScroll({
@@ -45,7 +46,12 @@ function ImageGallery(): JSX.Element {
       {searchInput && <h2>Search results of {searchInput}:</h2>}
       <ImageList cols={imageListCols} gap={7} >
         {imagesList.map((image) => (
-          <ImageElement key={`${image.id}-element`} image={image} itemRef={itemRef}/>
+          <ImageElement
+            key={`${image.id}-element`}
+            image={image}
+            itemRef={itemRef}
+            isLoggedIn={isLoggedIn}
+          />
         ))}
       </ImageList>
       {isLoading && <Loader />}

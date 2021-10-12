@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { SearchBar, Login } from '../components';
 import { searchImages } from '../state/images/actions';
 import { useAppSelector } from '../state/hooks';
+import { logOut } from '../state/login/actions';
 
 const styles: Record<string, SxProps> = {
   appBar: {
@@ -32,8 +33,7 @@ function Header(): JSX.Element {
         />
         <Login
           isLoggedIn={isLoggedIn}
-          onLogin={() => null}
-          onLogout={() => null}
+          onLogOut={() => dispatch(logOut)}
         />
       </Toolbar>
     </AppBar>

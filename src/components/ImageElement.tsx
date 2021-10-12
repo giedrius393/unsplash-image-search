@@ -14,9 +14,10 @@ const styles: Record<string, SxProps> = {
 interface ImageProps {
   image: Image,
   itemRef: any,
+  isLoggedIn: boolean,
 }
 
-function ImageElement({ image, itemRef }: ImageProps): JSX.Element {
+function ImageElement({ image, itemRef, isLoggedIn }: ImageProps): JSX.Element {
   const [liked, setLiked] = useState(false);
 
   return (
@@ -36,12 +37,14 @@ function ImageElement({ image, itemRef }: ImageProps): JSX.Element {
         title={image.description}
         subtitle={`@${image.username}`}
         actionIcon={
-          <IconButton
-            sx={styles.iconButton}
-            onClick={() => setLiked(!liked)}
-          >
-            {liked ? <Favorite/> : <FavoriteBorder/> }
-          </IconButton>
+          isLoggedIn && (
+            <IconButton
+              sx={styles.iconButton}
+              onClick={() => setLiked(!liked)}
+            >
+              {image.likedByUser ? <Favorite/> : <FavoriteBorder/> }
+            </IconButton>
+          )
         }
       />
     </ImageListItem>

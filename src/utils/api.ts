@@ -2,8 +2,11 @@ import axios from 'axios';
 
 import {
   UNSPLASH_API,
+  UNSPLASH_LOGIN_API,
   CLIENT_ID,
   IMAGES_PER_PAGE,
+  REDIRECT_URI,
+  CLIENT_SECRET,
 } from './constants';
 
 const getAxiosOptions = () => ({
@@ -30,5 +33,15 @@ export const getImages = (page: number, searchInput: string | null): Promise<any
     getImagesUrl(page, searchInput),
     getAxiosOptions(),
   );
+};
+
+export const getLogInToken = (code: string): Promise<any> => {
+  return axios.post(`${UNSPLASH_LOGIN_API}/token`, {
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET,
+    redirect_uri: REDIRECT_URI,
+    code,
+    grant_type: 'authorization_code',
+  }, getAxiosOptions());
 };
 

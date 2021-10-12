@@ -1,23 +1,27 @@
 import { Button } from '@mui/material';
+import { LOGIN_URL } from '../utils/constants';
 
 interface LoginProps {
   isLoggedIn: boolean,
-  onLogin: () => void,
-  onLogout: () => void,
+  onLogOut: () => void,
 }
 
 function Login(props: LoginProps) {
-  const { isLoggedIn, onLogin, onLogout } = props;
+  const redirectToLoginPage = () => {
+    window.location.href = LOGIN_URL;
+  };
+
+  const { isLoggedIn, onLogOut } = props;
 
   if (!isLoggedIn) {
     return (
-      <Button variant='contained' onClick={onLogin}>
+      <Button variant='contained' onClick={redirectToLoginPage}>
         Log In
       </Button>
     );
   }
   return (
-    <Button variant='contained' onClick={onLogout}>
+    <Button variant='contained' onClick={onLogOut}>
       Log Out
     </Button>
   );
