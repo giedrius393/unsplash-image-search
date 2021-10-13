@@ -1,8 +1,9 @@
 import { AnyAction } from 'redux';
 import {
-  LOAD_START,
-  LOAD_SUCCESS,
-  SEARCH,
+  IMAGE_LOADING_START,
+  IMAGE_LOADING_SUCCESS,
+  IMAGE_LOADING_ERROR,
+  SET_SEARCH_INPUT,
   TOGGLE_PHOTO_LIKE,
   TOGGLE_PHOTO_UNLIKE,
   SET_SEARCH_OPTIONS,
@@ -29,6 +30,7 @@ interface ImagesState {
   isLoading: boolean,
   searchInput: string | null,
   searchOptions: string[],
+  hasLoadingError: boolean,
 }
 
 const initialState: ImagesState = {
@@ -37,6 +39,7 @@ const initialState: ImagesState = {
   isLoading: false,
   searchInput: null,
   searchOptions: [],
+  hasLoadingError: false,
 };
 
 const imagesReducer = (
@@ -44,21 +47,29 @@ const imagesReducer = (
   action: AnyAction,
 ): ImagesState => {
   switch (action.type) {
-    case LOAD_START: {
+    case IMAGE_LOADING_START: {
       return {
         ...state,
         page: state.page + 1,
         isLoading: true,
+        hasLoadingError: false,
       };
     }
-    case LOAD_SUCCESS: {
+    case IMAGE_LOADING_SUCCESS: {
       return {
         ...state,
         isLoading: false,
         imagesList: [...state.imagesList, ...action.payload],
       };
     }
-    case SEARCH: {
+    case IMAGE_LOADING_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
+        hasLoadingError: true,
+      };
+    }
+    case SET_SEARCH_INPUT: {
       return {
         ...state,
         imagesList: [],

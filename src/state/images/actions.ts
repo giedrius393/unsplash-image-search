@@ -1,9 +1,10 @@
 import { Dispatch } from 'redux';
 import { RootState } from '../store';
 import {
-  LOAD_START,
-  LOAD_SUCCESS,
-  SEARCH,
+  IMAGE_LOADING_START,
+  IMAGE_LOADING_SUCCESS,
+  IMAGE_LOADING_ERROR,
+  SET_SEARCH_INPUT,
   SET_SEARCH_OPTIONS,
   TOGGLE_PHOTO_LIKE,
   TOGGLE_PHOTO_UNLIKE,
@@ -11,7 +12,7 @@ import {
 import { getImages, likeImage, unlikeImage } from '../../utils/api';
 
 export const loadImages = async (dispatch: Dispatch, getState: () => RootState) => {
-  dispatch({ type: LOAD_START });
+  dispatch({ type: IMAGE_LOADING_START });
   const { page, searchInput } = getState().images;
 
   try {
@@ -25,15 +26,15 @@ export const loadImages = async (dispatch: Dispatch, getState: () => RootState) 
       likes: image.likes,
       username: image.user.username,
     }));
-    dispatch({ type: LOAD_SUCCESS, payload: imagesList });
+    dispatch({ type: IMAGE_LOADING_SUCCESS, payload: imagesList });
   } catch (err) {
-    console.log(err);
+    dispatch({ type: IMAGE_LOADING_ERROR });
   }
 };
 
 export const searchImages = (searchInput: string) =>
   (dispatch: Dispatch<any>, getState: () => RootState): void => {
-    dispatch({ type: SEARCH, payload: searchInput });
+    dispatch({ type: SET_SEARCH_INPUT, payload: searchInput });
     localStorage.setItem(
       'search_options',
       JSON.stringify(getState().images.searchOptions),

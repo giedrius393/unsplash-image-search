@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ImageList } from '@mui/material';
+import { ImageList, Box } from '@mui/material';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 
-import { ImageElement, Loader } from '../components';
+import { ImageElement, Loader, Error } from '../components';
 import {
   likeImageAction,
   unlikeImageAction,
@@ -25,13 +25,19 @@ function ImageGallery(): JSX.Element {
   const setImageListCols = () => setListCols(getColsByWidth());
 
   const dispatch = useDispatch();
-  const { imagesList, isLoading, searchInput } = useAppSelector((state) => state.images);
+  const {
+    imagesList,
+    isLoading,
+    searchInput,
+    hasLoadingError,
+  } = useAppSelector((state) => state.images);
   const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
 
   const [imageListCols, setListCols] = useState(3);
   const [itemRef] = useInfiniteScroll({
     loading: isLoading,
     hasNextPage: true,
+    disabled: hasLoadingError,
     onLoadMore: () => dispatch(loadImages),
   });
 
@@ -43,11 +49,16 @@ function ImageGallery(): JSX.Element {
     return () => window.removeEventListener('resize', setImageListCols);
   }, []);
 
+  if (hasLoadingError && !imagesList.length) return <Error fullscreen />;
   if (isLoading && !imagesList.length) return <Loader fullscreen />;
 
   return (
     <>
-      {searchInput && <h2>Search results of {searchInput}:</h2>}
+      {searchInput && (
+        <Box sx={{ fontFamily: '"Open Sans", sans-serif', pt: 2, fontSize: 25 }}>
+          Search results of "{searchInput}":
+        </Box>
+      )}
       <ImageList cols={imageListCols} gap={7} >
         {imagesList.map((image) => (
           <ImageElement
@@ -61,6 +72,7 @@ function ImageGallery(): JSX.Element {
         ))}
       </ImageList>
       {isLoading && <Loader />}
+      {hasLoadingError && <Error />}
     </>
   );
 }
