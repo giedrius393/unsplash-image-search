@@ -1,5 +1,4 @@
-export const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI ||
-  'http://localhost:3000/login';
+export const REDIRECT_URI = `${window.location.origin}/login`;
 export const UNSPLASH_API = 'https://api.unsplash.com';
 export const UNSPLASH_LOGIN_API = 'https://unsplash.com/oauth';
 export const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
