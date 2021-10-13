@@ -1,30 +1,36 @@
 import axios from 'axios';
 
 import {
-  UNSPLASH_API,
-  UNSPLASH_LOGIN_API,
   CLIENT_ID,
-  IMAGES_PER_PAGE,
-  REDIRECT_URI,
   CLIENT_SECRET,
+  REDIRECT_URI,
 } from './constants';
+import {
+  imagesSearchUrl,
+  imagesUrl,
+  imageLikeUrl,
+  tokenUrl,
+} from './urls';
 
-const getAxiosOptions = () => {
+const getAuthorizationToken = () => {
   const token = window.localStorage.getItem('token');
-  return {
-    headers: {
-      Authorization: token?.length ? `Bearer ${token}` : `Client-ID ${CLIENT_ID}`,
-    },
-  };
+  return token?.length ?
+    `Bearer ${token}` :
+    `Client-ID ${CLIENT_ID}`;
 };
 
-const getImagesUrl = (page: number, searchInput: string | null) => {
-  let url = `photos?page=${page}&per_page=${IMAGES_PER_PAGE}`;
-  if (searchInput?.length) {
-    url = `search/${url}&query=${searchInput}`;
-  }
-  return `${UNSPLASH_API}/${url}`;
-};
+const api = axios.create();
+
+api.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      Authorization: getAuthorizationToken(),
+    };
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 
 export const getImages = (
@@ -32,30 +38,28 @@ export const getImages = (
   searchInput: string | null,
 ): Promise<any> => {
   if (!CLIENT_ID) {
-    return Promise.reject(new Error('fail'));
+    return Promise.reject(new Error('No Client ID'));
   }
 
-  return axios.get(
-    getImagesUrl(page, searchInput),
-    getAxiosOptions(),
-  );
+  if (searchInput?.length) return api.get(imagesSearchUrl(page + 1, searchInput));
+  return api.get(imagesUrl(page + 1));
 };
 
 export const getLogInToken = (code: string): Promise<any> => {
-  return axios.post(`${UNSPLASH_LOGIN_API}/token`, {
+  return api.post(tokenUrl, {
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
     redirect_uri: REDIRECT_URI,
     code,
     grant_type: 'authorization_code',
-  }, getAxiosOptions());
+  });
 };
 
 export const likeImage = (imageId: string) : Promise<any> => {
-  return axios.post(`${UNSPLASH_API}/photos/${imageId}/like`, null, getAxiosOptions());
+  return api.post(imageLikeUrl(imageId));
 };
 
 export const unlikeImage = (imageId: string) : Promise<any> => {
-  return axios.delete(`${UNSPLASH_API}/photos/${imageId}/like`, getAxiosOptions());
+  return api.delete(imageLikeUrl(imageId));
 };
 

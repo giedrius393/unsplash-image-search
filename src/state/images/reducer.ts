@@ -50,7 +50,6 @@ const imagesReducer = (
     case IMAGE_LOADING_START: {
       return {
         ...state,
-        page: state.page + 1,
         isLoading: true,
         hasLoadingError: false,
       };
@@ -58,6 +57,7 @@ const imagesReducer = (
     case IMAGE_LOADING_SUCCESS: {
       return {
         ...state,
+        page: state.page + 1,
         isLoading: false,
         imagesList: [...state.imagesList, ...action.payload],
       };
