@@ -79,7 +79,7 @@ const imagesReducer = (
         searchOptions: action.payload?.length ? [
           action.payload,
           ...state.searchOptions.filter(
-            (option) => option !== action.payload,
+            (option) => option.toLowerCase() !== action.payload.toLowerCase(),
           ),
         ].slice(0, 5) : state.searchOptions,
       };

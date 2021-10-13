@@ -9,7 +9,7 @@ export const imagesUrl = (page: number) =>
 
 export const imagesSearchUrl = (page: number, searchInput: string) =>
   `${UNSPLASH_API}/search/photos?page=${page}` +
-  `&per_page=${IMAGES_PER_PAGE}&query=${searchInput}`;
+  `&per_page=${IMAGES_PER_PAGE}&query=${encodeURIComponent(searchInput)}`;
 
 export const imageLikeUrl = (imageId: string) => `${UNSPLASH_API}/photos/${imageId}/like`;
 
