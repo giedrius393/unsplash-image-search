@@ -10,4 +10,4 @@ export const LOGIN_URL = UNSPLASH_LOGIN_API +
   `/authorize?client_id=${CLIENT_ID}` +
   `&redirect_uri=${REDIRECT_URI}` +
   '&response_type=code' +
-  '&scope=public+read_user+write_likes';
+  '&scope=public+write_likes';
