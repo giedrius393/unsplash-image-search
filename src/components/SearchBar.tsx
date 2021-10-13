@@ -3,8 +3,6 @@ import { Search as SearchIcon } from '@mui/icons-material';
 import { useState } from 'react';
 import { SxProps } from '@mui/system';
 
-const SUBMIT_REASONS = ['createOption', 'selectOption'];
-
 const styles: Record<string, SxProps> = {
   paper: {
     p: '2px 4px',
@@ -25,12 +23,12 @@ const styles: Record<string, SxProps> = {
 };
 
 interface SearchBarProps {
-  onSearchSubmit: (searchText: string) => void;
+  onSearchSubmit: (searchText: string | null) => void;
   searchOptions: string[];
 }
 
 function SearchBar(props: SearchBarProps): JSX.Element {
-  const [searchInput, setSearchInput] = useState<string>('');
+  const [searchInput, setSearchInput] = useState<string | null>(null);
 
   const { onSearchSubmit, searchOptions } = props;
 
@@ -38,15 +36,14 @@ function SearchBar(props: SearchBarProps): JSX.Element {
     event.preventDefault();
     event.currentTarget.focus();
     event.currentTarget.blur();
-    if (searchInput.length) {
+    if (searchInput?.length) {
       onSearchSubmit(searchInput);
     }
   };
 
-  const onChange = (_e: any, value: string | null, reason: string) => {
-    if (SUBMIT_REASONS.includes(reason) && value?.length) {
-      onSearchSubmit(value);
-    }
+  const onChange = (_e: any, value: string | null) => {
+    setSearchInput(value);
+    onSearchSubmit(value);
   };
 
   return (
@@ -57,13 +54,12 @@ function SearchBar(props: SearchBarProps): JSX.Element {
         sx={styles.paper}
       >
         <Autocomplete
-          inputValue={searchInput}
+          value={searchInput}
           id='search-input-autocomplete'
           sx={styles.autocomplete}
           freeSolo
           options={searchOptions}
           onChange={onChange}
-          onInputChange={(_e, newValue) => setSearchInput(newValue)}
           blurOnSelect
           renderInput={(params) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars

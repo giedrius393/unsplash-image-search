@@ -76,12 +76,12 @@ const imagesReducer = (
         page: 0,
         searchInput: action.payload,
         isLoading: true,
-        searchOptions: [
+        searchOptions: action.payload?.length ? [
           action.payload,
           ...state.searchOptions.filter(
             (option) => option !== action.payload,
           ),
-        ].slice(0, 5),
+        ].slice(0, 5) : state.searchOptions,
       };
     }
     case TOGGLE_PHOTO_LIKE: {

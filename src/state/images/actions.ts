@@ -32,13 +32,15 @@ export const loadImages = async (dispatch: Dispatch, getState: () => RootState) 
   }
 };
 
-export const searchImages = (searchInput: string) =>
+export const setSearchInput = (searchInput: string | null) =>
   (dispatch: Dispatch<any>, getState: () => RootState): void => {
     dispatch({ type: SET_SEARCH_INPUT, payload: searchInput });
-    localStorage.setItem(
-      'search_options',
-      JSON.stringify(getState().images.searchOptions),
-    );
+    if (searchInput?.length) {
+      localStorage.setItem(
+        'search_options',
+        JSON.stringify(getState().images.searchOptions),
+      );
+    }
     dispatch(loadImages);
   };
 
