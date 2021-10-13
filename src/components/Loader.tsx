@@ -17,6 +17,7 @@ function Loader({ fullscreen, children }: LoaderProps) {
     },
     childrenBox: {
       pt: 3,
+      fontFamily: '"Open Sans", sans-serif',
     },
   };
 

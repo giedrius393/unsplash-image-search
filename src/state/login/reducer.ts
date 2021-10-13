@@ -1,10 +1,16 @@
 import { AnyAction } from 'redux';
-import { LOGIN, LOGOUT } from './actionTypes';
+import { LOGIN, LOGOUT, LOGIN_ERROR } from './actionTypes';
 
 
-interface Login { isLoggedIn: boolean }
+interface Login {
+  isLoggedIn: boolean,
+  hasError: boolean,
+}
 
-const initialState: Login = { isLoggedIn: false };
+const initialState: Login = {
+  isLoggedIn: false,
+  hasError: false,
+};
 
 const loginReducer = (
   state = initialState,
@@ -12,10 +18,19 @@ const loginReducer = (
 ): Login => {
   switch (action.type) {
     case LOGIN: {
-      return { isLoggedIn: true };
+      return {
+        isLoggedIn: true,
+        hasError: false,
+      };
     }
     case LOGOUT: {
       return initialState;
+    }
+    case LOGIN_ERROR: {
+      return {
+        ...state,
+        hasError: true,
+      };
     }
     default: {
       return state;

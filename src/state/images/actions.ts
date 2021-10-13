@@ -21,7 +21,7 @@ export const loadImages = async (dispatch: Dispatch, getState: () => RootState) 
     const imagesList = imageData.map((image: any) => ({
       id: image.id,
       urls: image.urls,
-      description: image.description || image.alt_description,
+      description: image.description,
       likedByUser: image.liked_by_user,
       likes: image.likes,
       username: image.user.username,
