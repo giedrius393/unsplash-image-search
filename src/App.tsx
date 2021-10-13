@@ -5,11 +5,13 @@ import { useDispatch } from 'react-redux';
 
 import { Header, ImageGallery, Login } from './modules';
 import { checkLogInStatus } from './state/login/actions';
+import { loadSearchOptions } from './state/images/actions';
 
 
 function App(): JSX.Element {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(loadSearchOptions);
     const token = window.localStorage.getItem('token');
     token?.length && dispatch(checkLogInStatus);
   }, []);

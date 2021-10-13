@@ -5,6 +5,7 @@ import {
   SEARCH,
   TOGGLE_PHOTO_LIKE,
   TOGGLE_PHOTO_UNLIKE,
+  SET_SEARCH_OPTIONS,
 } from './actionTypes';
 
 export interface Image {
@@ -69,7 +70,7 @@ const imagesReducer = (
           ...state.searchOptions.filter(
             (option) => option !== action.payload,
           ),
-        ],
+        ].slice(0, 5),
       };
     }
     case TOGGLE_PHOTO_LIKE: {
@@ -88,6 +89,12 @@ const imagesReducer = (
           ...image,
           likedByUser: image.id === action.payload ? false : image.likedByUser,
         })),
+      };
+    }
+    case SET_SEARCH_OPTIONS: {
+      return {
+        ...state,
+        searchOptions: action.payload,
       };
     }
     default: {

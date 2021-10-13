@@ -4,6 +4,7 @@ import {
   LOAD_START,
   LOAD_SUCCESS,
   SEARCH,
+  SET_SEARCH_OPTIONS,
   TOGGLE_PHOTO_LIKE,
   TOGGLE_PHOTO_UNLIKE,
 } from './actionTypes';
@@ -30,9 +31,21 @@ export const loadImages = async (dispatch: Dispatch, getState: () => RootState) 
   }
 };
 
-export const searchImages = (searchInput: string) => (dispatch: Dispatch<any>): void => {
-  dispatch({ type: SEARCH, payload: searchInput });
-  dispatch(loadImages);
+export const searchImages = (searchInput: string) =>
+  (dispatch: Dispatch<any>, getState: () => RootState): void => {
+    dispatch({ type: SEARCH, payload: searchInput });
+    localStorage.setItem(
+      'search_options',
+      JSON.stringify(getState().images.searchOptions),
+    );
+    dispatch(loadImages);
+  };
+
+export const loadSearchOptions = (dispatch: Dispatch) => {
+  const searchOptions = localStorage.getItem('search_options');
+  if (!searchOptions) return;
+
+  dispatch({ type: SET_SEARCH_OPTIONS, payload: JSON.parse(searchOptions) });
 };
 
 export const likeImageAction = (imageId: string) => async (dispatch: Dispatch) => {
