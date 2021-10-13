@@ -9,4 +9,4 @@ This project was created for FE practical assignment
 3. Add ``http://localhost:3000/login`` as Redirect URI in Unsplash App settings (``write likes access`` permission should also be enabled)
 4. Run ``yarn start`` to start the project
 
-![Screenshot](screenshot.jpg)
+![Screenshot](screenshot.gif)
