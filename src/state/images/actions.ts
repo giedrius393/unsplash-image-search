@@ -8,6 +8,7 @@ import {
   SET_SEARCH_OPTIONS,
   TOGGLE_PHOTO_LIKE,
   TOGGLE_PHOTO_UNLIKE,
+  IMAGE_LOADING_NO_PAGES,
 } from './actionTypes';
 import { getImages, likeImage, unlikeImage } from '../../utils/api';
 
@@ -18,6 +19,9 @@ export const loadImages = async (dispatch: Dispatch, getState: () => RootState) 
   try {
     const { data } = await getImages(page, searchInput);
     const imageData = data instanceof Array ? data : data.results;
+    if (!imageData.length) {
+      dispatch({ type: IMAGE_LOADING_NO_PAGES });
+    }
     const imagesList = imageData.map((image: any) => ({
       id: image.id,
       urls: image.urls,

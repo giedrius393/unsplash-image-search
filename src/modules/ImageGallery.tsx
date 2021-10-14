@@ -30,13 +30,14 @@ function ImageGallery(): JSX.Element {
     isLoading,
     searchInput,
     hasLoadingError,
+    hasMorePages,
   } = useAppSelector((state) => state.images);
   const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
 
   const [imageListCols, setListCols] = useState(3);
   const [itemRef] = useInfiniteScroll({
     loading: isLoading,
-    hasNextPage: true,
+    hasNextPage: hasMorePages,
     disabled: hasLoadingError,
     onLoadMore: () => dispatch(loadImages),
   });

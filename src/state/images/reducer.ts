@@ -7,6 +7,7 @@ import {
   TOGGLE_PHOTO_LIKE,
   TOGGLE_PHOTO_UNLIKE,
   SET_SEARCH_OPTIONS,
+  IMAGE_LOADING_NO_PAGES,
 } from './actionTypes';
 
 export interface Image {
@@ -31,6 +32,7 @@ interface ImagesState {
   searchInput: string | null,
   searchOptions: string[],
   hasLoadingError: boolean,
+  hasMorePages: boolean,
 }
 
 const initialState: ImagesState = {
@@ -40,6 +42,7 @@ const initialState: ImagesState = {
   searchInput: null,
   searchOptions: [],
   hasLoadingError: false,
+  hasMorePages: true,
 };
 
 const imagesReducer = (
@@ -69,6 +72,12 @@ const imagesReducer = (
         hasLoadingError: true,
       };
     }
+    case IMAGE_LOADING_NO_PAGES: {
+      return {
+        ...state,
+        hasMorePages: false,
+      };
+    }
     case SET_SEARCH_INPUT: {
       return {
         ...state,
@@ -76,6 +85,7 @@ const imagesReducer = (
         page: 0,
         searchInput: action.payload,
         isLoading: true,
+        hasMorePages: true,
         searchOptions: action.payload?.length ? [
           action.payload,
           ...state.searchOptions.filter(
