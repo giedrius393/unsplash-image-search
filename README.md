@@ -1,6 +1,6 @@
 # Unsplash Image Search
 
-This project was created for FE practical assignment
+This application was created for some demo purposes. It basically uses Unsplash APIs to view and like/dislike images
 
 ## How to set up
 
