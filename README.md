@@ -1,6 +1,6 @@
 # Unsplash Image Search
 
-This application was created for some demo purposes. It basically uses Unsplash APIs to view and like/dislike images
+This application was created for some demo purposes. It basically uses Unsplash APIs to search and like/dislike images
 
 ## How to set up
 
